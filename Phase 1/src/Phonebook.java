@@ -1,8 +1,8 @@
 
 public class Phonebook<T> {
 	Contact s = new Contact();
-	LinkedList<Contact> conlist = new LinkedList<>();
-	LinkedList<Event> eventlist = new LinkedList<>();
+	LinkedList<Contact> conlist = new LinkedList<>(); // list for contacts
+	LinkedList<Event> eventlist = new LinkedList<>(); // list for events
 
 	public String re() {
 		conlist.findLast();
@@ -180,7 +180,7 @@ public class Phonebook<T> {
 		return true;
 	}
 	
-	public LinkedList<Event> eventSearchName(String s, int x) { // to search for event by name, it returns a linkedlist
+	public LinkedList<Event> eventSearchName(String s) { // to search for event by name, it returns a linkedlist
 																// of type event because one contact could have many events							
 		Contact tmp = searchContact((T) s, 1);
 		if (tmp == null)

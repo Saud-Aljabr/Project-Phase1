@@ -3,7 +3,7 @@ public class Contact implements Comparable<Contact> {
 	
 	private String name, email, address, birthday, notes;
 	private int phoneNum;
-	LinkedList <Event> eventCon = new LinkedList<>();
+	LinkedList <Event> eventCon = new LinkedList<>(); // list for events connected with the contact
 
 	
 	public Contact() {
