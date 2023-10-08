@@ -3,16 +3,16 @@ public class LinkedList<T> {
 	private Node<T> head, current;
 
 	public void insert(T n) {
-		Node<T> tmp;
+		Node<T> tmp = new Node<T>(n);
 		if (head == null)
-			head = current = new Node<T>(n);
+			head = current = tmp;
 		else {
-			tmp = current.next;
-			current.next = new Node<T>(n);
-			current = current.next;
-			current.next = tmp;
-			current.prev = tmp.prev;
+			tmp.next = current.next;
 			tmp.prev = current;
+			if (current.next!= null)
+				current.next.prev = tmp;
+			current.next = tmp;
+			current = tmp;
 		}
 	}
 

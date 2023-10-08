@@ -36,5 +36,10 @@ public class Event {
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
+	@Override
+	public String toString() {
+		return "Event [title=" + title + ", dateTime=" + dateTime + ", location=" + location + ", contact=" + contact
+				+ "]";
+	}
 	
 }

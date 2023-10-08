@@ -76,6 +76,13 @@ public class Contact implements Comparable<Contact> {
 	public void addEvent(Event e) {
 		eventCon.insert(e);
 	}
+
+	@Override
+	public String toString() {
+		return "Contact [name=" + name + ", email=" + email + ", address=" + address + ", birthday=" + birthday
+				+ ", notes=" + notes + ", phoneNum=" + phoneNum + "]";
+	}
+	
 	
 
 	
