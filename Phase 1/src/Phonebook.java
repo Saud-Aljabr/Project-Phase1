@@ -64,7 +64,8 @@ public class Phonebook<T> {
 
 	public LinkedList<Contact> searchContact(T s, int x) { // the x represent the criteria search
 		LinkedList<Contact> contacts = new LinkedList<>(); // return type is linked list in case 3,4,5 it could have
-															// more than one contact
+		if (conlist.empty())								// more than one contact
+			return null;
 		conlist.findFirst();
 		if (x == 1) { // if x=1 search by name
 			while (!conlist.last()) {
@@ -123,30 +124,50 @@ public class Phonebook<T> {
 		return null;
 
 	}
+	
+	public boolean deleteCon2(T t, int x) {
+		LinkedList<Contact> list = searchContact(t, x);
+		Contact contact = null;
+		if (list == null)
+			return false;
+		contact = list.retrieve();
+		conlist.remove(); // after the searchContact call the current is now the contact u want to delete
+		if (contact.eventCon.empty()) // in case the contact does not have any events
+			return true;
+		eventlist.findFirst(); // from here it deletes all connected events with contact
+		while (!eventlist.last()) {
+			if (contact == eventlist.retrieve().getContact())
+				eventlist.remove();
+			eventlist.findNext();
+		}
+		if (contact == eventlist.retrieve().getContact())
+			eventlist.remove();
+		return true;
+	}
 
 	public boolean deleteCon(String name) { // deletes a contact with all connected events
-		Contact tmp = null;
+		Contact contact = null;
 		conlist.findFirst();
 		while (!conlist.last()) {
 			if (name.equalsIgnoreCase(conlist.retrieve().getName())) {
-				tmp = conlist.retrieve();
+				contact = conlist.retrieve();
 				conlist.remove();
 			}
 			conlist.findNext();
 		}
 		if (name.equalsIgnoreCase(conlist.retrieve().getName())) {
-			tmp = conlist.retrieve();
+			contact = conlist.retrieve();
 			conlist.remove();
 		}
-		if (tmp == null) // if tmp still null it means contact does not exist
+		if (contact == null) // if tmp still null it means contact does not exist
 			return false;
 		eventlist.findFirst(); // from here it deletes all connected events with contact
 		while (!eventlist.last()) {
-			if (tmp == eventlist.retrieve().getContact())
+			if (contact == eventlist.retrieve().getContact())
 				eventlist.remove();
 			eventlist.findNext();
 		}
-		if (tmp == eventlist.retrieve().getContact())
+		if (contact == eventlist.retrieve().getContact())
 			eventlist.remove();
 		return true;
 	}

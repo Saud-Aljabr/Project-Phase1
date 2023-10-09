@@ -10,7 +10,7 @@ public class Contact implements Comparable<Contact> {
 		super();
 	}
 
-	public Contact(String name, String email, String address, String birthday, String notes, int phoneNum) {
+	public Contact(String name,int phoneNum, String email, String address, String birthday, String notes) {
 		super();
 		this.name = name;
 		this.email = email;
