@@ -78,5 +78,6 @@ public class LinkedList<T> {
 	public T retrieve() {
 		return current.data;
 	}
+	
 
 }

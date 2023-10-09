@@ -1,14 +1,14 @@
 
 public class Phonebook<T> {
 	Contact s = new Contact();
-	LinkedList<Contact> conlist = new LinkedList<>(); // list for contacts
-	LinkedList<Event> eventlist = new LinkedList<>(); // list for events
+	private LinkedList<Contact> conlist = new LinkedList<>(); // list for contacts
+	private LinkedList<Event> eventlist = new LinkedList<>(); // list for events
 
 	public void re() {
 		eventlist.findFirst();
-		while(!eventlist.last()) {
-		System.out.println(eventlist.retrieve().getTitle());
-		eventlist.findNext();
+		while (!eventlist.last()) {
+			System.out.println(eventlist.retrieve().getTitle());
+			eventlist.findNext();
 		}
 		System.out.println(eventlist.retrieve().getTitle());
 
@@ -26,7 +26,6 @@ public class Phonebook<T> {
 			conlist.insertFirst(contact);
 			return true;
 		}
-		conlist.findNext();
 		while (!conlist.last()) { // sort by name
 			if (contact.compareTo(conlist.retrieve()) < 0) {
 				conlist.findPrev();
@@ -63,48 +62,63 @@ public class Phonebook<T> {
 		return true;
 	}
 
-	public Contact searchContact(T s, int x) { // the x represent the criteria search
+	public LinkedList<Contact> searchContact(T s, int x) { // the x represent the criteria search
+		LinkedList<Contact> contacts = new LinkedList<>(); // return type is linked list in case 3,4,5 it could have
+															// more than one contact
 		conlist.findFirst();
 		if (x == 1) { // if x=1 search by name
 			while (!conlist.last()) {
-				if (((String) s).equalsIgnoreCase(conlist.retrieve().getName()))
-					return conlist.retrieve();
+				if (((String) s).equalsIgnoreCase(conlist.retrieve().getName())) {
+					contacts.insert(conlist.retrieve());
+					return contacts;
+				}
 				conlist.findNext();
 			}
-			if (((String) s).equalsIgnoreCase(conlist.retrieve().getName()))
-				return conlist.retrieve();
+			if (((String) s).equalsIgnoreCase(conlist.retrieve().getName())) {
+				contacts.insert(conlist.retrieve());
+				return contacts;
+			}
 		} else if (x == 2) { // if x=2 search by phonNum
 			while (!conlist.last()) {
-				if ((Integer) s == conlist.retrieve().getPhoneNum())
-					return conlist.retrieve();
+				if ((Integer) s == conlist.retrieve().getPhoneNum()) {
+					contacts.insert(conlist.retrieve());
+					return contacts;
+				}
+
 				conlist.findNext();
 			}
-			if ((Integer) s == conlist.retrieve().getPhoneNum())
-				return conlist.retrieve();
+			if ((Integer) s == conlist.retrieve().getPhoneNum()) {
+				contacts.insert(conlist.retrieve());
+				return contacts;
+			}
+
 		} else if (x == 3) { // if x=3 search by email
 			while (!conlist.last()) {
 				if (((String) s).equalsIgnoreCase(conlist.retrieve().getEmail()))
-					return conlist.retrieve();
+					contacts.insert(conlist.retrieve());
 				conlist.findNext();
 			}
 			if (((String) s).equalsIgnoreCase(conlist.retrieve().getEmail()))
-				return conlist.retrieve();
+				contacts.insert(conlist.retrieve());
+			return contacts;
 		} else if (x == 4) { // if x=4 search by Address
 			while (!conlist.last()) {
 				if (((String) s).equalsIgnoreCase(conlist.retrieve().getAddress()))
-					return conlist.retrieve();
+					contacts.insert(conlist.retrieve());
 				conlist.findNext();
 			}
 			if (((String) s).equalsIgnoreCase(conlist.retrieve().getAddress()))
-				return conlist.retrieve();
+				contacts.insert(conlist.retrieve());
+			return contacts;
 		} else if (x == 5) { // if x=5 search by birthday
 			while (!conlist.last()) {
 				if (((String) s).equalsIgnoreCase(conlist.retrieve().getBirthday()))
-					return conlist.retrieve();
+					contacts.insert(conlist.retrieve());
 				conlist.findNext();
 			}
 			if (((String) s).equalsIgnoreCase(conlist.retrieve().getBirthday()))
-				return conlist.retrieve();
+				contacts.insert(conlist.retrieve());
+			return contacts;
 		}
 		return null;
 
@@ -137,13 +151,16 @@ public class Phonebook<T> {
 		return true;
 	}
 
-	public boolean schedule(String title, String name, String DateTime, String location) { // to add an event and making sure the order is alphabetically
-		Contact tmp = searchContact((T) name, 1);
+	public boolean schedule(String title, String name, String DateTime, String location) { // to add an event and making
+																							// sure the order is
+																							// alphabetically
+		LinkedList<Contact> tmp = searchContact((T) name, 1);
 		if (tmp == null || !checkConflict(DateTime)) // checking if contact exist or if there is a conflict
 			return false;
 		else {
-			Event ev = new Event(title, DateTime, location, tmp);
-			tmp.addEvent(ev); // this adding is for the events connected with the contact
+			Contact con = tmp.retrieve();
+			Event ev = new Event(title, DateTime, location, con);
+			con.addEvent(ev); // this adding is for the events connected with the contact
 
 			if (eventlist.empty()) {
 				eventlist.insert(ev);
@@ -154,7 +171,6 @@ public class Phonebook<T> {
 				eventlist.insertFirst(ev);
 				return true;
 			}
-			eventlist.findNext();
 			while (!eventlist.last()) {
 				if (ev.compareTo(eventlist.retrieve()) < 0) {
 					eventlist.findPrev();
@@ -188,7 +204,7 @@ public class Phonebook<T> {
 	}
 
 	public LinkedList<Event> eventSearchName(String name) { // to search for event by name, it returns a linkedlist
-		Contact tmp = searchContact((T) name, 1); // of type event because one contact could have many events
+		Contact tmp = searchContact((T) name, 1).retrieve(); // of type event because one contact could have many events
 		if (tmp == null)
 			return null;
 		return tmp.eventCon;
@@ -235,6 +251,14 @@ public class Phonebook<T> {
 
 		return firstName;
 	}
-	
+
+	public void printEventAlphabetically() {
+		eventlist.findFirst();
+		while (!eventlist.last()) {
+			System.out.println(eventlist.retrieve().toString());
+			eventlist.findNext();
+		}
+		System.out.println(eventlist.retrieve().toString());
+	}
 
 }

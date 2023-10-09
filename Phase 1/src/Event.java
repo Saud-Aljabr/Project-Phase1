@@ -38,7 +38,7 @@ public class Event {
 	}
 	@Override
 	public String toString() {
-		return "Event [title=" + title + ", dateTime=" + dateTime + ", location=" + location + ", contact=" + contact
+		return "Event [title=" + title + ", dateTime=" + dateTime + ", location=" + location + ", contact=" + contact.getName()
 				+ "]";
 	}
 	
