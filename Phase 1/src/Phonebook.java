@@ -4,15 +4,7 @@ public class Phonebook<T> {
 	private LinkedList<Contact> conlist = new LinkedList<>(); // list for contacts
 	private LinkedList<Event> eventlist = new LinkedList<>(); // list for events
 
-	public void re() {
-		eventlist.findFirst();
-		while (!eventlist.last()) {
-			System.out.println(eventlist.retrieve().getTitle());
-			eventlist.findNext();
-		}
-		System.out.println(eventlist.retrieve().getTitle());
-
-	}
+	
 
 	public boolean addCon(Contact contact) { // the adding is alphabetically
 		if (conlist.empty()) {
@@ -247,30 +239,36 @@ public class Phonebook<T> {
 
 	public LinkedList<Contact> searchFirstName(String name) { // search by first name
 		LinkedList<Contact> firstName = new LinkedList<>();
+		if (conlist.empty())
+			return firstName;
+		else {
+		String tmp = null;
+		int spaceindex;
 		conlist.findFirst();
 		while (!conlist.last()) {
-			String tmp = conlist.retrieve().getName();
-			int x = 0;
+			tmp = conlist.retrieve().getName();
+			spaceindex = 0;
 			for (int i = 0; i < tmp.length(); i++) // this loop is to detect the space
 				if (tmp.charAt(i) == ' ') {
-					x = i;
+					spaceindex = i;
 					break;
 				}
-			if (name.equalsIgnoreCase(tmp.substring(0, x)))
+			if (name.equalsIgnoreCase(tmp.substring(0, spaceindex)))
 				firstName.insert(conlist.retrieve());
 			conlist.findNext();
 		}
-		String tmp = conlist.retrieve().getName(); // repeated pressure for last contact
-		int x = 0;
+		tmp = conlist.retrieve().getName(); // repeated pressure for last contact
+		 spaceindex = 0;
 		for (int i = 0; i < tmp.length(); i++)
 			if (tmp.charAt(i) == ' ') {
-				x = i;
+				spaceindex = i;
 				break;
 			}
-		if (name.equalsIgnoreCase(tmp.substring(0, x)))
+		if (name.equalsIgnoreCase(tmp.substring(0, spaceindex)))
 			firstName.insert(conlist.retrieve());
 
 		return firstName;
+		}
 	}
 
 	public void printEventAlphabetically() {
