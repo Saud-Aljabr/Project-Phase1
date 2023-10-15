@@ -45,7 +45,7 @@ public class test {
 	    System.out.println("Enter search criteria:\n1.Contact name\n2.Conatct phone number");
 	    num = s.nextInt();
 	    while (num<1 || num>2) {
-	     System.out.println("Enter a valid number");
+	     System.out.println("Enter a valid number:");
 	     num = s.nextInt();
 	    }
 	    if (num == 1) {
